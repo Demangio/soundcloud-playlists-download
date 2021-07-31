@@ -5,23 +5,21 @@ import numpy as np
 
 playlists_file = open('playlists.txt', 'r')
 
-folders_names_file = open('folders_names.txt', 'r')
-
-folder_names = folders_names_file.read().splitlines()
-
 playlists_table = playlists_file.read().splitlines()
 
-print(playlists_table)
+playlists = [playlists_table[i].split(" ")[0] for i in range(len(playlists_table))]
 
-print(folder_names)
+folder_names = [playlists_table[i].split(" ")[1] for i in range(len(playlists_table))]
+
+print(np.array(list(zip(folder_names, playlists))))
 
 api = SoundcloudAPI()
 
-for index_playlist, playlist_url in enumerate(playlists_table):
+for folder_name, playlist_url in zip(folder_names, playlists):
 
+    print(playlist_url)
 
     playlist = api.resolve(playlist_url)
-
 
     for track in playlist.tracks:
         filename = f'{track.artist} - {track.title}'
@@ -30,9 +28,9 @@ for index_playlist, playlist_url in enumerate(playlists_table):
                 filename = filename.replace(i, "")
             if ord(i) == 32:
                 filename = filename.replace(i, "_")
-        filename = f"{folder_names[index_playlist]}/" + filename + '.mp3'
+        filename = f"{folder_name}/" + filename + '.mp3'
         if os.path.isfile(filename):
-            print(f"File {filename} already exists")
+            pass
         else:
             with open(filename, 'wb+') as fp:
                 track.write_mp3_to(fp)
