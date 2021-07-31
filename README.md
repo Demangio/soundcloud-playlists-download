@@ -1,7 +1,9 @@
 # soundcloud-playlists-download
 I use Soundcloud-lib https://pypi.org/project/soundcloud-lib/ to download my playlists
 
-Installation: pip3 install soundcloud-lib
+Installation: pip install soundcloud-lib
+
+Latest updates/debug: pip install git+https://github.com/3jackdaws/soundcloud-lib.git
 
 requirements: python3, soundcloud-lib, numpy
 
